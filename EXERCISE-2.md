@@ -17,7 +17,7 @@ The plan is to be delivered in two parts -
 
 * Tests for the following /pet endpoints are omitted.
   * ```GET /pet/findByTags``` - the Swagger page has this as deprecated
-  * ```POST /post/{petId}``` - Having a parametrized POST endpoint that only updates existing data is dubious and [arguably breaks HTTP/1 standard RFC2616 9.5](https://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html#sec9.5) since unlike PUT or (the best choice for this) PATCH, POST is not idempotent and should be used to create new representations only. In a real world project I would probably raise this as a possible API design bug (see [Bug List](BUGREPORT-1.md)) and only if it's approved, write tests for it.
+  * ```POST /post/{petId}``` - Having a parametrized POST endpoint that only updates existing data is dubious and [arguably breaks HTTP/1 standard RFC2616 9.5](https://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html#sec9.5) since unlike PUT or (the best choice for this) PATCH, POST is not idempotent and should be used to create new representations only. In a real world project I would probably raise this as a possible API design bug (see [Bug List](BUGREPORT-2.md)) and only if it's approved, write tests for it.
 * Performance (including Load and Stress) Tests
 * Devoted Security / Pentesting
 
