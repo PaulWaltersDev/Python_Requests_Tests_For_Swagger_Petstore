@@ -1,5 +1,5 @@
-# Python_Requests_Tests_For_Swagger_Petstore
-A Set of Tests Written in Python and Using Requests and PyTest against the pet endpoints of the [Pet Store Swagger API](https://petstore.swagger.io/).
+# Python Requests Tests For Petstore
+A Set of Tests Written in Python and Using Requests and PyTest against the pet endpoints and request methods of the [Pet Store API](https://petstore.swagger.io/).
 
 ## Test Plan and Implementation Details
 
@@ -32,16 +32,44 @@ pip install -r requirements.txt
 
 ##Execution Instructions
 
-There is one set of tests along with a page objects folder and conftest.py file in the suite within src/tests.
+There are two sets of tests in the suite.
 
 ```
-src/tests/test_pet_search_CRUD.py
+test_pet_search_CRUD.py
+test_pet_invoke_error_responses.py
 ```
 
-It can be run via the command -
+They can be run via the command -
 
 ```
-pytest src/tests/test_pet_search_CRUD.py
+pytest test_pet_search_CRUD.py
+pytest test_pet_invoke_error_responses.py
+```
+
+With the current state of the API and set set of bugs (see bottom) you will see an output like -
+
+```
+# for test_pet_search_CRUD.py
+
+=========================== short test summary info ============================
+FAILED test_pet_search_CRUD.py::test_check_all_pets_match_schema - AssertionError: 2 pets do not match the schema: [9223372036854775048, 92233...
+FAILED test_pet_search_CRUD.py::test_get_existing_pet_single - assert 404 == 200
+========================= 2 failed, 6 passed in 40.17s =========================
+
+# for test_pet_invoke_error_responses.py
+
+=========================== short test summary info ============================
+FAILED test_pet_invoke_error_responses.py::test_find_by_invalid_status - assert 200 == 400
+FAILED test_pet_invoke_error_responses.py::test_find_by_empty_status - assert 200 == 400
+FAILED test_pet_invoke_error_responses.py::test_get_pet_with_invalid_id - assert 404 == 400
+FAILED test_pet_invoke_error_responses.py::test_create_pet_with_non_integer_id - assert 500 == 405
+FAILED test_pet_invoke_error_responses.py::test_create_pet_with_negative_id - assert 200 == 405
+FAILED test_pet_invoke_error_responses.py::test_create_pet_with_missing_status - assert 200 == 405
+FAILED test_pet_invoke_error_responses.py::test_update_non_existent_pet - assert 200 == 404
+FAILED test_pet_invoke_error_responses.py::test_update_pet_with_non_integer_id - assert 500 == 400
+FAILED test_pet_invoke_error_responses.py::test_delete_pet_with_non_integer_id - assert 404 == 400
+========================= 9 failed, 2 passed in 15.21s =========================
+
 ```
 
 ## Bug Report
