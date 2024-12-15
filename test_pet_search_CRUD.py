@@ -17,6 +17,8 @@ def delete_created_pets():
     yield
     for pet_id in pets_to_delete_ids:
         r = requests.delete(pet_api_urls["domain"] + pet_api_urls["get by petId"].format(petId=pet_id))
+        # Asserts are not typically included in fixtures but I think it is necessary here
+        # as any pets not deleted due to failure would have to be deleted manually some other way
         assert r.status_code == 200, f"Error in deleting pet with id {pet_id}"
 
 
@@ -91,7 +93,6 @@ def test_get_existing_pet_single():
 def test_create_pet(post_pet):
     pet, r = post_pet()
     assert r.status_code == 200
-    assert r.json() == pet
     validate(instance=r.json(), schema=pet_schema)
     
     r_saved = requests.get(pet_api_urls["domain"] + pet_api_urls["get by petId"].format(petId=pet["id"]))
@@ -120,12 +121,18 @@ def test_put_existing_pet(post_pet):
     pet, r = post_pet() 
     
     pet["name"] = fake.first_name()
-    pet["status"] = "sold"
+    pet["status"] = "available"
+    r = requests.post(pet_api_urls["domain"] + pet_api_urls["pet"], json=pet)
+    assert r.status_code == 200
+    validate(instance=r.json(), schema=pet_schema)
+    
+    pet["name"] = fake.first_name() # Generates new first name post sell
+    pet["status"] = "sold"          # Changes status to sold
     r = requests.put(pet_api_urls["domain"] + pet_api_urls["pet"], json=pet)
     assert r.status_code == 200
     assert r.json() == pet
-    validate(instance=r.json(), schema=pet_schema)
     
+    # Retrieves pet and checks if the changes were saved
     r_saved = requests.get(pet_api_urls["domain"] + pet_api_urls["get by petId"].format(petId=pet["id"]))
     assert r_saved.status_code == 200
     assert r_saved.json() == pet

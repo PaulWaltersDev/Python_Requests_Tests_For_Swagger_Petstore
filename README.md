@@ -1,9 +1,9 @@
 # Python_Requests_Tests_For_Swagger_Petstore
 A Set of Tests Written in Python and Using Requests and PyTest against the pet endpoints of the [Pet Store Swagger API](https://petstore.swagger.io/).
 
-##Test Plan and Implementation Details
+## Test Plan and Implementation Details
 
-I invite you to study the [test plan](EXERCISE-2.md) for the above.
+I invite you to study the [test plan](EXERCISE-2.md) and [API Test Code Implementation Details](TEST_SUITE.md) for the above.
 
 ## Deployment Instructions
 

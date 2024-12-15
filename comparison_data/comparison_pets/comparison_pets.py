@@ -1,17 +1,21 @@
 pet_single = {
-  "id": 42,
+  "id": 9223372016900011781,
   "category": {
-    "id": 1,
-    "name": "Dogs"
+    "id": 100,
+    "name": "Dinosaur"
   },
-  "name": "Buddysik",
+  "name": "Tyrannosaurus",
   "photoUrls": [
-    "https://example.com/photos/buddy.jpg"
+    "http://en.wikipedia.org/wiki/Tyrannosaurus#/media/File:Tyrannosaurus_rex_mmartyniuk.png"
   ],
   "tags": [
     {
-      "id": 7,
-      "name": "Cute"
+      "id": 100,
+      "name": "reptile"
+    },
+    {
+      "id": 101,
+      "name": "dinosaur"
     }
   ],
   "status": "available"

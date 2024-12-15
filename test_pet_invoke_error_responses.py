@@ -6,6 +6,7 @@ from utils.pet_api_urls import pet_api_urls
 
 fake = Faker()
 
+"""
 @pytest.fixture()
 def post_pet():
     def _post_pet():
@@ -29,7 +30,7 @@ def post_pet():
         r = requests.post(pet_api_urls["domain"] + pet_api_urls["pet"], json=new_pet)
         return (new_pet, r)
     return _post_pet
-
+"""
 
 def test_find_by_invalid_status():
     payload = {
@@ -48,9 +49,9 @@ def test_find_by_empty_status():
 
 
 def test_get_non_existent_pet():
-    # At the time of writing this test, the petstore API does not have any pets with id less than 8
-    pet_id = 2
-    r = requests.get(pet_api_urls["domain"] + pet_api_urls["get by petId"].format(petId=pet_id))
+    # get pet/findByStatus for all categories shows that at the current time there are no pets with id between 13000 and 50000    
+    nonexistent_pet_id = fake.random_int(min=13000, max=50000)
+    r = requests.get(pet_api_urls["domain"] + pet_api_urls["get by petId"].format(petId=nonexistent_pet_id))
     assert r.status_code == 404
 
 
@@ -99,13 +100,14 @@ def test_create_pet_with_negative_id():
         "status": "available"
     }
     r = requests.post(pet_api_urls["domain"] + pet_api_urls["pet"], json=incorrect_pet)
-    #assert r.status_code == 405
+    assert r.status_code == 405
     
     r_saved = requests.get(pet_api_urls["domain"] + pet_api_urls["get by petId"].format(petId=incorrect_pet["id"]))
     assert r_saved.status_code == 404
 
 
 def test_create_pet_with_missing_status():
+    # Below created without status field
     incorrect_pet = {
         "id": fake.random_int(min=1, max=9223372036854775807),
         "category": {
@@ -125,10 +127,10 @@ def test_create_pet_with_missing_status():
     assert r.status_code == 405
 
 
-def test_put_non_existent_pet():
-    # get pet/findByStatus for all categories shows that at the current time there are no pets with id less than 10000
+def test_update_non_existent_pet():
+    # get pet/findByStatus for all categories shows that at the current time there are no pets with id between 13000 and 50000
     incorrect_pet = {
-        "id": fake.random_int(min=1, max=10000),
+        "id": fake.random_int(min=13000, max=50000),
         "category": {
             "id": fake.random_int(min=1, max=9223372036854775807),
             "name": fake.word()
@@ -147,7 +149,7 @@ def test_put_non_existent_pet():
     assert r.status_code == 404
 
     
-def test_put_pet_with_non_integer_id():
+def test_update_pet_with_non_integer_id():
     incorrect_pet = {
         "id": "not_an_integer",
         "category": {
@@ -169,8 +171,8 @@ def test_put_pet_with_non_integer_id():
 
 
 def test_delete_non_existent_pet():
-    # get pet/findByStatus for all categories shows that at the current time there are no pets with id less than 10000    
-    nonexistent_pet_id = fake.random_int(min=1, max=10000)
+    # get pet/findByStatus for all categories shows that at the current time there are no pets with id between 13000 and 50000    
+    nonexistent_pet_id = fake.random_int(min=13000, max=50000)
     r = requests.delete(pet_api_urls["domain"] + pet_api_urls["get by petId"].format(petId=nonexistent_pet_id))
     assert r.status_code == 404
 
