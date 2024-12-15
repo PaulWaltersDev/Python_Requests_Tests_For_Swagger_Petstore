@@ -21,9 +21,10 @@ FAILED test_pet_search_CRUD.py::test_get_existing_pet_single - assert 404 == 200
 
 | Bug ID  | Description | Found in Test | Severity |
 | --- | --- | --- | --- |
-| AUTO-PET-01 | Pet Items found not conforming to 200 OK schema for ```GET pet/findByStatus``` | test_check_all_pets_match_schema |  Medium/High, suggests data cleanup required |
+| AUTO-PET-01 | Pet Items found not conforming to 200 OK schema for ```GET pet/findByStatus``` - NB: Found to be intermittent | test_check_all_pets_match_schema |  Medium/High, suggests data cleanup required |
 | AUTO-PET-02 | Request ```POST /pet/{pet_id}``` for updating existing Pets is a bad use of POST and breaks HTTP/1 standards. It should really be a PATCH request. | N/A |  Medium, does not break any current actions but allows for uncertain behaviour |
 | *AUTO-PET-03 | Previously known existing pets retrievable via ```GET pet/{pet_id} no longer retrievable later under same pet ID. Demonstrated with (among others) pet_id "9223372016900012624" | test_get_existing_pet_single |  High |
+| *AUTO-PET-04 | Uploading a file via ```POST /pet/{petId}/uploadImage``` does not result in that image being included in that pet Schema | found in writing ```test_create_pet_and_upload_image()``` but not easy to assert for. See comments in that test. |  High - No Was to Upload Correct Image at this time |
 
 *See links to screenshots below.
 
@@ -53,12 +54,12 @@ FAILED test_pet_invoke_error_responses.py::test_delete_pet_with_non_integer_id -
 
 | Bug ID  | Description | Found in Test | Severity |
 | --- | --- | --- | --- |
-| AUTO-PET-04 | ```GET pet/findByStatus``` for an empty status "" returns 200 OK. The expected response code from the swagger doc is 400| test_find_by_invalid_status |  Medium - not good but no change of state or data |
-| AUTO-PET-05 | ```GET pet/findByStatus``` for an invalid status "invalid status" returns 200 OK. The expected response code from the swagger doc is 400| test_find_by_empty_status |  Medium - not good but no change of state or data |
-| AUTO-PET-06 | ```GET pet/{pet_id}``` for an invalid id "not an integer" returns 200 OK. The expected response code from the swagger doc is 400| test_get_pet_with_invalid_id |  Medium - not good but no change of state or data |
-| AUTO-PET-07 | ```POST pet``` with pet with invalid id "not an integer" returns 500 (Internal Server Error). The expected response code from the swagger doc is 405| test_create_pet_with_non_integer_id |  Medium/High |
-| AUTO-PET-08 | ```POST pet``` with pet with negative id returns 200 OK. Negative ids are not likely to be valid and the expected response code from the swagger doc is 405| test_create_pet_with_negative_id |  High - pet with negative ID is likely to be created |
-| AUTO-PET-09 | ```POST pet``` with pet with missing status field returns 200 OK. The expected response code from the swagger doc is 405| create_pet_with_missing_status |  High - if this continues then it will just allow for more pets to be added that don't confirm to the stated schema (see AUTO-PET-01) and thus lower data quality overall |
-| AUTO-PET-10 | ```PUT pet``` with non-existent pet ID returns 200 OK. The expected response code from the swagger doc is 404| test_update_non_existent_pet |  High - Pet probably created as new record |
-| AUTO-PET-11 | ```PUT pet``` with invalid ID "not an integer" returns 500. The expected response code from the swagger doc is 400| test_update_pet_with_non_integer_id |  Medium/High |
-| AUTO-PET-12 | ```DELETE pet/{pet_id}``` with invalid ID "not an integer" returns 404. The expected response code from the swagger doc is 400| test_delete_pet_with_non_integer_id |  Low/Medium - Not confirming to the doc but largely inconsequential |
+| AUTO-PET-05 | ```GET pet/findByStatus``` for an empty status "" returns 200 OK. The expected response code from the swagger doc is 400| test_find_by_invalid_status |  Medium - not good but no change of state or data |
+| AUTO-PET-06 | ```GET pet/findByStatus``` for an invalid status "invalid status" returns 200 OK. The expected response code from the swagger doc is 400| test_find_by_empty_status |  Medium - not good but no change of state or data |
+| AUTO-PET-07 | ```GET pet/{pet_id}``` for an invalid id "not an integer" returns 200 OK. The expected response code from the swagger doc is 400| test_get_pet_with_invalid_id |  Medium - not good but no change of state or data |
+| AUTO-PET-08 | ```POST pet``` with pet with invalid id "not an integer" returns 500 (Internal Server Error). The expected response code from the swagger doc is 405| test_create_pet_with_non_integer_id |  Medium/High |
+| AUTO-PET-09 | ```POST pet``` with pet with negative id returns 200 OK. Negative ids are not likely to be valid and the expected response code from the swagger doc is 405| test_create_pet_with_negative_id |  High - pet with negative ID is likely to be created |
+| AUTO-PET-10 | ```POST pet``` with pet with missing status field returns 200 OK. The expected response code from the swagger doc is 405| create_pet_with_missing_status |  High - if this continues then it will just allow for more pets to be added that don't confirm to the stated schema (see AUTO-PET-01) and thus lower data quality overall |
+| AUTO-PET-11 | ```PUT pet``` with non-existent pet ID returns 200 OK. The expected response code from the swagger doc is 404| test_update_non_existent_pet |  High - Pet probably created as new record |
+| AUTO-PET-12 | ```PUT pet``` with invalid ID "not an integer" returns 500. The expected response code from the swagger doc is 400| test_update_pet_with_non_integer_id |  Medium/High |
+| AUTO-PET-13 | ```DELETE pet/{pet_id}``` with invalid ID "not an integer" returns 404. The expected response code from the swagger doc is 400| test_delete_pet_with_non_integer_id |  Low/Medium - Not confirming to the doc but largely inconsequential |

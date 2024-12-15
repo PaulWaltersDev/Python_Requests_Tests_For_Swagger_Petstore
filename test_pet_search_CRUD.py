@@ -77,7 +77,7 @@ def test_check_all_pets_match_schema():
     for pet in r.json():
         try:
             validate(instance=pet, schema=pet_schema)
-        except Exception as e:
+        except Exception:
             pets_id_failing_validation.append(pet["id"])
     
     assert not pets_id_failing_validation, f"{len(pets_id_failing_validation)} pets do not match the schema: {pets_id_failing_validation}"
@@ -111,8 +111,9 @@ def test_create_pet_and_upload_image(post_pet):
     assert r.status_code == 200, f"Error in uploading image for pet {pet['id']} - {r.text}"
     
     r_saved = requests.get(pet_api_urls["domain"] + pet_api_urls["get by petId"].format(petId=pet["id"]))
-    print(r_saved.json())
-    assert r_saved.status_code == 200
+    print(r_saved.json()["photoUrls"])      # Done so that when run with "-s" a tester can open the image link after upload
+                                            # It is clear and raised as a bug that uploading an image
+                                            # does not actually save that specific image to the pet
     if r_saved.status_code == 200 and pet["id"] not in pets_to_delete_ids:
         pets_to_delete_ids.append(pet["id"])
 

@@ -53,6 +53,10 @@ Usually I only use one or two assertions in a test however some happy path CRUD 
 
 Obviously this means that testing PUT and DELETE are contingent on a previous ```POST /pet``` working as expected, however the only alternative is to pick an existing pet ID and use that instead, which makes the test on such an open api especially brittle and reliant on that pet not being deleted by another user.
 
+### Comments and DocStrings
+
+I have put comments to explain the reasoning for certain implementations I have done. However I believe the test names I have chosen are simple and obvious enough, so have not felt the need this time (unlike in the Selenium project for instance) to include DocStrings for each test.
+
 ### Cleanup
 
 For tests in ```test_pet_search_CRUD.py``` the fixture ```def delete_created_pets()``` with modular scope is run to ieratively delete all pets expected to have been created in previous tests in the module. This is so that in the case of working-as-expected API requests the Petstore is left as one found it.

@@ -6,32 +6,6 @@ from utils.pet_api_urls import pet_api_urls
 
 fake = Faker()
 
-"""
-@pytest.fixture()
-def post_pet():
-    def _post_pet():
-        new_pet = {
-            "id": fake.random_int(min=1000000000000000000, max=9223372036854775807),
-            "category": {
-                "id": fake.random_int(min=1, max=9223372036854775807),
-                "name": fake.word()
-            },
-            "name": fake.first_name(),
-            "photoUrls": [fake.image_url()],
-            "tags": [
-                {
-                    "id": fake.random_int(min=1, max=9223372036854775807),
-                    "name": fake.word()
-                }
-            ],
-            "status": "available"
-        }
-        
-        r = requests.post(pet_api_urls["domain"] + pet_api_urls["pet"], json=new_pet)
-        return (new_pet, r)
-    return _post_pet
-"""
-
 def test_find_by_invalid_status():
     payload = {
         "status": ["invalid_status"]
