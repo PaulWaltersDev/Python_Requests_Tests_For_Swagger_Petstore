@@ -1,17 +1,17 @@
 pet_single = {
-  "id": 9223372016900014281,
+  "id": 42,
   "category": {
-    "id": 0,
-    "name": "string"
+    "id": 1,
+    "name": "Dogs"
   },
-  "name": "Puff",
+  "name": "Buddysik",
   "photoUrls": [
-    "string"
+    "https://example.com/photos/buddy.jpg"
   ],
   "tags": [
     {
-      "id": 0,
-      "name": "string"
+      "id": 7,
+      "name": "Cute"
     }
   ],
   "status": "available"
